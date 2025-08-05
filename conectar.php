@@ -12,7 +12,7 @@
 
         if (empty($email) || empty($senha)) {
             $_SESSION['login_erro'] = "Por favor, preencha todos os campos.";
-            header("Location: index.php");
+            header("Location: login.php");
             exit;
         } else {
             $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -26,12 +26,12 @@
                 $_SESSION['user'] = $funcionario['id'];
                 $_SESSION['nome'] = $funcionario['email'];
 
-                header("location: login.php");
+                header("location: index.php");
                 exit;
             } else{
                 $_SESSION['login_email'] = $email;
                 $_SESSION['login_erro'] = "E-mail ou senha incorretos.";
-                header("Location: index.php");
+                header("Location: login.php");
                 exit;
             }
         }

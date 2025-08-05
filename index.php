@@ -1,9 +1,5 @@
 <?php
-    session_start(); 
-    $erro = $_SESSION['login_erro'] ?? '';
-    $email = $_SESSION['login_email'] ?? '';
-    unset($_SESSION['login_email']);
-    unset($_SESSION['login_erro']); 
+    include("protect.php");
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -13,35 +9,22 @@
     <title>Login</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   </head>
-  <?php
-    include("conectar.php");
-    include("navbar.php");
-  ?>
+
   <body>
+    <?php
+       include("navbar.php");
+    ?>
     <div class="container mt-5">
         <div class="row d-flex justify-content-center">
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="mt-2 mb-4 text-center">Login</h4>
-                        <?php if (!empty($erro)): ?>
-                            <div class="alert alert-danger text-center mt-3">
-                                <?= $erro ?>
-                            </div>
-                        <?php endif; ?>
-                        <form action="conectar.php" method="POST">
-                            <div class="mt-3 text-start">
-                                <label class="form-label fw-bold">E-mail</label>
-                                <input name="email" class="form-control" type="text" placeholder="exemplo@gmail.com" value="<?= htmlspecialchars($email ?? '') ?>">
-                            </div>
-                            <div class="mt-3 text-start">
-                                <label class="form-label fw-bold">Senha</label>
-                                <input name="senha" class="form-control" type="password" placeholder="********">
-                            </div>
-                            <div class="mt-4 mb-3 text-center">
-                                <button type="submit" name="conectar-btn" class="btn btn-primary">Iniciar sessão</button>
-                            </div>
-                        </form>
+                        <h4 class="text-center">
+                            Óla, seja bem-vindo!
+                        </h4>
+                        <p class="text-center">
+                            <strong><?= htmlspecialchars($_SESSION['nome']) ?></strong>
+                        </p>
                     </div>
                 </div>
             </div>
