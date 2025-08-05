@@ -1,13 +1,19 @@
 <?php
-    session_start();
     require("conexao.php");
 
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-    if(isset($_POST['email']) || isset($_POST['senha'])){
-        if(strlen($_POST['email']) == 0){
-            echo("Preencha seu email");
-        } else if(strlen($_POST['senha']) == 0){
-            echo("Preencha sua senha");
+    if (isset($_POST['conectar-btn'])) {
+        $email = trim($_POST['email'] ?? '');
+        $senha = trim($_POST['senha'] ?? '');
+    
+
+        if (empty($email) || empty($senha)) {
+            $_SESSION['login_erro'] = "Por favor, preencha todos os campos.";
+            header("Location: index.php");
+            exit;
         } else {
             $email = mysqli_real_escape_string($conn, $_POST['email']);
             $senha = mysqli_real_escape_string($conn, $_POST['senha']);
@@ -21,8 +27,12 @@
                 $_SESSION['nome'] = $funcionario['email'];
 
                 header("location: login.php");
+                exit;
             } else{
-                echo("O usuário não foi encontrado!");
+                $_SESSION['login_email'] = $email;
+                $_SESSION['login_erro'] = "E-mail ou senha incorretos.";
+                header("Location: index.php");
+                exit;
             }
         }
     }

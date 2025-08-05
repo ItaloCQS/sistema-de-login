@@ -1,5 +1,9 @@
 <?php
-    require("conexao.php");
+    session_start(); 
+    $erro = $_SESSION['login_erro'] ?? '';
+    $email = $_SESSION['login_email'] ?? '';
+    unset($_SESSION['login_email']);
+    unset($_SESSION['login_erro']); 
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -20,14 +24,19 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="mt-2 mb-4 text-center">Login</h4>
+                        <?php if (!empty($erro)): ?>
+                            <div class="alert alert-danger text-center mt-3">
+                                <?= $erro ?>
+                            </div>
+                        <?php endif; ?>
                         <form action="conectar.php" method="POST">
                             <div class="mt-3 text-start">
                                 <label class="form-label fw-bold">E-mail</label>
-                                <input name="email" class="form-control" type="text" placeholder="exemplo@gmail.com">
+                                <input name="email" class="form-control" type="text" placeholder="exemplo@gmail.com" value="<?= htmlspecialchars($email ?? '') ?>">
                             </div>
                             <div class="mt-3 text-start">
                                 <label class="form-label fw-bold">Senha</label>
-                                <input name="senha" class="form-control" type="text" placeholder="********">
+                                <input name="senha" class="form-control" type="password" placeholder="********">
                             </div>
                             <div class="mt-4 mb-3 text-center">
                                 <button type="submit" name="conectar-btn" class="btn btn-primary">Iniciar sessão</button>
